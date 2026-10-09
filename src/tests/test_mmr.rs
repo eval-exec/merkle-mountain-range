@@ -6,8 +6,8 @@ use crate::{
     util::{MemMMR, MemStore},
 };
 use faster_hex::hex_string;
-use proptest::prelude::*;
-use rand::{seq::SliceRandom, thread_rng};
+use proptest::{prop_compose, proptest};
+use rand::{prelude::*, thread_rng};
 
 fn test_mmr(count: u32, proof_elem: Vec<u32>) {
     let store = MemStore::default();
