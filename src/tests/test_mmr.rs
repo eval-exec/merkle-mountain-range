@@ -43,7 +43,7 @@ fn test_gen_new_root_from_proof(count: u32) {
     let positions: Vec<u64> = (0u32..count)
         .map(|i| mmr.push(NumberHash::from(i)).unwrap())
         .collect();
-    let elem = count - 1;
+    let elem = count.saturating_sub(1);
     let pos = positions[elem as usize];
     let proof = mmr.gen_proof(vec![pos]).expect("gen proof");
     let new_elem = count;
@@ -279,7 +279,7 @@ proptest! {
         let mut leaves: Vec<u32> = (0..count).collect();
         let mut rng = thread_rng();
         leaves.shuffle(&mut rng);
-        let leaves_count = rng.gen_range(1..count - 1);
+        let leaves_count = rng.gen_range(1..count.saturating_sub(1));
         leaves.truncate(leaves_count as usize);
         test_mmr(count, leaves);
     }
